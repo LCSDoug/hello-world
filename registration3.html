@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seminar 2026 Registration</title>
+    <style>
+        /* This sets the basic font and background color for the entire page. */
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* The main container that holds the entire form. */
+        #registration-app {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+
+        /* Each section of the form is a "page". This rule hides all pages by default. */
+        .page-container {
+            display: none; /* Hide pages */
+            padding: 25px 40px;
+            animation: fadeIn 0.5s; /* Add a simple fade-in effect */
+        }
+
+        /* This class is added by JavaScript to show the current page. */
+        .page-container.active {
+            display: block; /* Show the active page */
+        }
+
+        /* Styles for page titles (the H2 headings). */
+        h2 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for input fields, dropdowns (select), and text areas. */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding doesn't affect the width */
+        }
+
+        /* Styles for labels (the text description for an input field). */
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        /* The red asterisk for mandatory fields. */
+        .mandatory {
+            color: red;
+        }
+
+        /* Italicized instructions. */
+        .instructions {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Container for the navigation buttons (Previous/Next) at the bottom of each page. */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        /* General style for all buttons. */
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        /* Style for the main "Next" or "Submit" button. */
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Style for the "Previous" button. */
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        /* Hover effect to make buttons feel interactive. */
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        /* A slight "press down" effect when a button is clicked. */
+        button:active {
+            transform: translateY(1px);
+        }
+
+        /* Disabled button style. */
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        /* Specific style for the 'I understand' button when it's ready to be clicked. */
+        .btn-understand-ready {
+            background-color: #28a745; /* Green color */
+            color: white;
+        }
+
+        /* Container for the Yes/No buttons. */
+        .toggle-buttons {
+            display: flex;
+            gap: 10px; /* Space between the buttons */
+        }
+
+        /* Style for Yes/No buttons. */
+        .toggle-btn {
+            background-color: #add8e6; /* Light blue for unselected */
+            color: #0056b3;
+            flex-grow: 1; /* Makes buttons take equal space */
+        }
+
+        /* Style for the selected Yes/No button. */
+        .toggle-btn.selected {
+            background-color: #007bff; /* Blue for selected */
+            color: white;
+        }
+
+        /* Style for error messages shown during validation. */
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        
+        /* Styles for the pop-up modal window (used for skill level confirmation). */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stays in place even if the page is scrolled */
+            z-index: 1000; /* Sits on top of everything else */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .modal-content p {
+            margin-bottom: 20px;
+        }
+
+        /* Simple animation for the pages. */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="registration-app">
+        <div id="page-registration" class="page-container active">
+            <h2>Seminar 2026 Registration</h2>
+            <p class="instructions">PLEASE NOTE: Seminar... 2026 will use email exclusively for all communications to registrants. It is essential that you include an email address on your registration form that is checked regularly.</p>
+            <p>If you have any questions, please contact 2026Registration@eac-acb.ca</p>
+            <p>Mandatory fields are indicated with a red asterisk (<span class="mandatory">*</span>)</p>
+            <ul>
+                <li>All EAC/ACB members in good standing are eligible to register and attend the seminar. You will need your membership number and expiry date to complete the registration process.</li>
+                <li>The pre-registration fee of $100 is a non-refundable deposit and must be remitted to confirm the registration.</li>
+                <li>All registrations received by November 1, 2025, will be treated equally for the preference of classes. Please register early to avoid disappointment.</li>
+                <li>Classes that do not meet registration minimums as of December 31, 2025, will be cancelled.</li>
+                <li>Class assignments will be sent electronically by February 10, 2026. Every effort will be made to place you in the class(es) of your choice.</li>
+                <li>An invoice will be sent to you with your registration confirmation showing the balance owing, including kit fees. Full payment, including kit fees, must be received by March 1, 2026, to guarantee your registration.</li>
+            </ul>
+            
+            <div style="margin-top: 20px;">
+                <input type="checkbox" id="accept-conditions-checkbox">
+                <label for="accept-conditions-checkbox">I have read, understood and accept the conditions. <span class="mandatory">*</span></label>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button id="understand-button" class="btn-primary" disabled>I Understand</button>
+            </div>
+        </div>
+        
+        <div id="page-registrant-details" class="page-container">
+            <h2>Registrant Details</h2>
+            <p class="instructions">Mandatory fields are indicated with a red asterisk (<span class="mandatory">*</span>)</p>
+            
+            <label for="email">eMail: <span class="mandatory">*</span></label>
+            <input type="email" id="email" name="email">
+
+            <label for="first-name">First Name: <span class="mandatory">*</span></label>
+            <input type="text" id="first-name" name="firstName">
+
+            <label for="last-name">Last Name: <span class="mandatory">*</span></label>
+            <input type="text" id="last-name" name="lastName">
+
+            <label for="preferred-name">Preferred Name (if different from above)</label>
+            <input type="text" id="preferred-name" name="preferredName">
+
+            <label for="membership-number">EAC/ACB Membership #: <span class="mandatory">*</span></label>
+            <input type="text" id="membership-number" name="membershipNumber" placeholder="e.g., AB 123456">
+            <p class="instructions">Your membership number can be found in the top banner of your recent issue of eThreads. It is two capital letters, a space, and six numerals.</p>
+            
+            <label for="membership-expiry">Membership Expiry Date: <span class="mandatory">*</span></label>
+            <input type="date" id="membership-expiry" name="membershipExpiry">
+            
+            <p class="instructions">To register for the seminar, you must be a member of EAC/ACB. Please visit eac-acb.ca/eac-acb-shop to complete the membership application process if you are not currently a member.</p>
+
+            <label for="chapter-name">Chapter name (if applicable)</label>
+            <input type="text" id="chapter-name" name="chapterName" placeholder="Will default to 'Individual Member' if blank">
+            
+            <label for="mailing-address">Full Mailing Address: <span class="mandatory">*</span></label>
+            <textarea id="mailing-address" name="mailingAddress" rows="4" placeholder="Street Address, Unit #, City, Province/State, and Postal/Zip Code"></textarea>
+            
+            <label for="phone-number">Phone Number: <span class="mandatory">*</span></label>
+            <input type="tel" id="phone-number" name="phoneNumber" placeholder="999-999-9999">
+            
+            <div class="navigation-buttons">
+                <button id="goto-additional-options-btn" class="btn-secondary">Skip to Additional Options</button>
+                <button id="goto-additional-info-btn" class="btn-primary">Continue with In-Person Classes</button>
+            </div>
+        </div>
+
+        <div id="page-additional-info" class="page-container">
+            <h2>Additional Information</h2>
+            <p class="instructions">This information is not required if you skip to Additional Options.</p>
+
+            <label for="emergency-contact-name">Emergency Contact Name (first and last): <span class="mandatory">*</span></label>
+            <input type="text" id="emergency-contact-name" name="emergencyContactName">
+
+            <label for="emergency-contact-relationship">Relationship of this person to you: <span class="mandatory">*</span></label>
+            <input type="text" id="emergency-contact-relationship" name="emergencyContactRelationship" placeholder="e.g., spouse, friend, son, daughter">
+
+            <label for="emergency-contact-number">Emergency Contact Number: <span class="mandatory">*</span></label>
+            <input type="tel" id="emergency-contact-number" name="emergencyContactNumber" placeholder="999-999-9999">
+
+            <label>Is your emergency contact travelling with you? <span class="mandatory">*</span></label>
+            <div class="toggle-buttons" data-field-name="emergencyContactTravelling">
+                <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                <button type="button" class="toggle-btn" data-value="No">No</button>
+            </div>
+
+            <label>Is this your first Seminar? <span class="mandatory">*</span></label>
+            <div class="toggle-buttons" data-field-name="firstSeminar">
+                <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                <button type="button" class="toggle-btn" data-value="No">No</button>
+            </div>
+
+            <label>Would you be willing to be a Class Angel? <span class="mandatory">*</span></label>
+            <div class="toggle-buttons" data-field-name="classAngel">
+                <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                <button type="button" class="toggle-btn" data-value="No">No</button>
+            </div>
+            <p class="instructions">For more information about what this entails, please contact 2026Registration@eac-acb.ca</p>
+
+            <label for="accommodations">Do you have any mobility accommodations or dietary restrictions? <span class="mandatory">*</span></label>
+            <textarea id="accommodations" name="accommodations" rows="4" placeholder="If none, please type N/A"></textarea>
+            <p class="instructions">If dietary or any other needs change before the event, please contact 2026Registration@eac-acb.ca</p>
+
+            <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+
+        <div id="page-activity-selection" class="page-container">
+            <h2>Activity Selection</h2>
+            <p class="instructions">You can pay your registration fee and seminar balance by e-transfer, cheque or credit card.</p>
+            <p>Registration fees for in-person attendees include the classes or simply stitching, opening reception, EAC/ACB luncheon and banquet. The registration fee for partial in-person registrants will include the class(es) and either the opening reception and EAC/ACB luncheon or the banquet.</p>
+            <ul>
+                <li>$1,000  ≈  One 4-day or two 2-day class fees: Session AB¹</li>
+                <li>$515    ≈  2-day class fee: Session A²</li>
+                <li>$495    ≈  2-day class fee: Session B³</li>
+                <li>$200    ≈  1-day class: Options Day</li>
+                <li>$80     ≈  Granville Island and False Creek Tour: Options Day</li>
+                <li>$100    ≈  Museum of Anthropology at UBC: Options Day</li>
+                <li>$5      ≈  Friday night lecture with Stephanie Bonneau: Options Day</li>
+                <li>$830    ≈  4-days Simply Stitching: Session AB¹</li>
+                <li>$425    ≈  2-day Simply Stitching: Session A²</li>
+                <li>$405    ≈  2-day Simply Stitching: Session B³</li>
+                <li>$920    ≈  2-day class and 2 days Simply Stitching: Session AB¹</li>
+                <li>$500    ≈  4-day virtual class</li>
+                <li>$250    ≈  2-day virtual class</li>
+                <li>$125    ≈  1-day virtual class</li>
+                <li>$50     ≈  Market Night table rental for members</li>
+                <li>$70     ≈  Market Night table rental for non-members</li>
+                <li>$60     ≈  Opening Reception extra tickets</li>
+                <li>$55     ≈  EAC/ACB Luncheon extra tickets</li>
+                <li>$95     ≈  Banquet extra tickets</li>
+            </ul>
+            <p><small>¹ includes the Opening Reception, EAC/ACB Luncheon, and Banquet</small><br>
+            <small>² includes the Opening Reception and EAC/ACB Luncheon</small><br>
+            <small>³ includes the Banquet</small></p>
+
+            <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+        
+        <div id="page-skill-levels" class="page-container">
+            <h2>Skill Level Definitions</h2>
+            
+            <p><strong>Basic:</strong> For anyone new to embroidery or the technique or requiring guidance in reading/understanding stitch diagrams and patterns. Assistance and repeated directions will be provided. Basic level classes can also be enjoyed by the intermediate and advanced stitcher.</p>
+            <p><strong>Basic/Intermediate:</strong> For those with stitching experience who are new to the technique. Assistance and detailed directions will be provided. Basic/Intermediate level classes can also be enjoyed by the intermediate and advanced stitcher.</p>
+            <p><strong>Intermediate:</strong> For those familiar with the technique or similar techniques at the basic level who want to advance their understanding of the technique, who understand stitch diagrams and patterns but may need guidance, and who can work somewhat independently.</p>
+            <p><strong>Intermediate/Advanced:</strong> For those familiar with and who have some experience with the technique at the intermediate level, who may not be fully proficient with the more complex stitches, who can work independently with guidance from the instructor and move quickly from one element to the next. There may not be much class time available to repeat instructions/demonstrations, and stitchers unfamiliar with the technique may be unable to keep up.</p>
+            <p><strong>Advanced:</strong> For those who want to expand and challenge their skills in a technique in which they have foundational experience, can read charts and stitch diagrams easily, are familiar with the stitches used in the technique, have a proficient understanding of stitch techniques for the more complex stitches, and can work independently. The class will move quickly through the setup and basic elements of the project. There may not be much class time to repeat instructions/demonstrations, and stitchers unfamiliar with the technique may be unable to keep up.</p>
+            
+             <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+        
+        <div id="page-session-a" class="page-container">
+            <h2>Session A (May 6 & 7, 2026)</h2>
+            <p class="instructions">Make three choices from the 4-day AB classes or 2-day A classes, in order of preference. If you select a 4-day class, the same preference will carry over to Session B.</p>
+            
+            <label for="session-a-choice-1">1st Choice:</label>
+            <select id="session-a-choice-1" name="sessionAChoice1"></select>
+
+            <label for="session-a-choice-2">2nd Choice:</label>
+            <select id="session-a-choice-2" name="sessionAChoice2"></select>
+            
+            <label for="session-a-choice-3">3rd Choice:</label>
+            <select id="session-a-choice-3" name="sessionAChoice3"></select>
+            
+             <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+
+        <div id="page-session-b" class="page-container">
+             <h2>Session B (May 9 & 10, 2026)</h2>
+            <p class="instructions">Make three choices from the 2-day B classes. If you chose a 4-day class in Session A, your choice is already reflected here.</p>
+            
+            <label for="session-b-choice-1">1st Choice:</label>
+            <select id="session-b-choice-1" name="sessionBChoice1"></select>
+
+            <label for="session-b-choice-2">2nd Choice:</label>
+            <select id="session-b-choice-2" name="sessionBChoice2"></select>
+            
+            <label for="session-b-choice-3">3rd Choice:</label>
+            <select id="session-b-choice-3" name="sessionBChoice3"></select>
+            
+             <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+        
+        <div id="page-options-day" class="page-container">
+            <h2>Options Day (May 8, 2026)</h2>
+            <p class="instructions">All Options Day activities are at additional cost + kit fees. Make three choices from classes and tours available, in order of preference.</p>
+        
+            <label for="options-day-choice-1">1st Choice:</label>
+            <select id="options-day-choice-1" name="optionsDayChoice1"></select>
+
+            <label for="options-day-choice-2">2nd Choice:</label>
+            <select id="options-day-choice-2" name="optionsDayChoice2"></select>
+            <label for="options-day-choice-3">3rd Choice (Optional):</label>
+            <select id="options-day-choice-3" name="optionsDayChoice3"></select>
+            
+             <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+        
+        <div id="page-additional-options" class="page-container">
+            <h2>Additional Options</h2>
+            
+            <div id="virtual-classes-section">
+                <h3>Virtual Classes</h3>
+                <label>Would you like to take an on-line class that will run post-Seminar 2026?</label>
+                <div class="toggle-buttons" id="toggle-virtual-classes">
+                    <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                    <button type="button" class="toggle-btn selected" data-value="No">No</button>
+                </div>
+                
+                <div id="virtual-classes-content" style="display:none;">
+                    <p class="instructions">All online classes are at additional cost + kit fees and shipping. Check the Seminar Website in case of any date changes.</p>
+                    <div id="virtual-classes-list"></div>
+                    <div style="text-align: right; font-weight: bold; margin-top: 15px;">
+                        Virtual Class Total: $<span id="virtual-class-total">0.00</span>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin: 20px 0;">
+            
+            <div id="evening-lecture-section">
+                 <h3>Evening Lecture</h3>
+                 <label>I would like to purchase ticket(s) for the Evening Lecture: The Making of a Designer Couture Dress with Stephanie Bonneau? on Friday, May 8, 2026 at $5 each? <span class="mandatory">*</span></label>
+                 <div class="toggle-buttons" data-field-name="eveningLecture">
+                    <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                    <button type="button" class="toggle-btn selected" data-value="No">No</button>
+                 </div>
+                 <div class="additional-ticket-details" data-ticket-type="eveningLecture" style="display:none;">
+                    <label>Number of tickets:</label>
+                    <input type="number" name="eveningLectureTicketCount" value="1" min="1">
+                 </div>
+            </div>
+            <hr style="margin: 20px 0;">
+            
+            <div id="additional-tickets-section">
+                <h3>Additional tickets</h3>
+                <label>I would like to purchase additional ticket(s) for the Opening Reception on Tuesday, May 5, 2026 at $60 each. <span class="mandatory">*</span></label>
+                <div class="toggle-buttons" data-field-name="buyOpeningReceptionTickets">
+                    <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                    <button type="button" class="toggle-btn selected" data-value="No">No</button>
+                </div>
+                <div class="additional-ticket-details" data-ticket-type="openingReception" style="display:none;">
+                    <label>Number of tickets:</label>
+                    <input type="number" name="openingReceptionTicketCount" value="1" min="1">
+                    <label>Names and dietary restrictions:</label>
+                    <textarea name="openingReceptionGuestDetails" rows="3"></textarea>
+                </div>
+                
+                <label>I would like to purchase additional ticket(s) for the EAC/ACB Luncheon on Thursday, May 7, 2026 at $55 each. <span class="mandatory">*</span></label>
+                 <div class="toggle-buttons" data-field-name="buyLuncheonTickets">
+                    <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                    <button type="button" class="toggle-btn selected" data-value="No">No</button>
+                </div>
+                <div class="additional-ticket-details" data-ticket-type="luncheon" style="display:none;">
+                    <label>Number of tickets:</label>
+                    <input type="number" name="luncheonTicketCount" value="1" min="1">
+                    <label>Names and dietary restrictions:</label>
+                    <textarea name="luncheonGuestDetails" rows="3"></textarea>
+                </div>
+                
+                <label>I would like to purchase additional ticket(s) for the Banquet on Saturday, May 9, 2026 at $95 each. <span class="mandatory">*</span></label>
+                 <div class="toggle-buttons" data-field-name="buyBanquetTickets">
+                    <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                    <button type="button" class="toggle-btn selected" data-value="No">No</button>
+                </div>
+                 <div class="additional-ticket-details" data-ticket-type="banquet" style="display:none;">
+                    <label>Number of tickets:</label>
+                    <input type="number" name="banquetTicketCount" value="1" min="1">
+                    <label>Names and dietary restrictions:</label>
+                    <textarea name="banquetGuestDetails" rows="3"></textarea>
+                </div>
+            </div>
+             <hr style="margin: 20px 0;">
+             
+             <div id="market-night-section">
+                <h3>Market Night Table Rental</h3>
+                <p class="instructions">If you are a crafter or designer consider renting a table for Market Night to sell artisan items during the evening of Thursday May 7, 2026.</p>
+                <label>Would you like to rent a table at Market Night?</label>
+                <div class="toggle-buttons" id="toggle-market-night">
+                    <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                    <button type="button" class="toggle-btn selected" data-value="No">No</button>
+                </div>
+                <div id="market-night-details" style="display:none;">
+                    <label>Rental for:</label>
+                    <input type="radio" name="marketNightMemberType" value="Member" checked> EAC/ACB Member ($50)
+                    <input type="radio" name="marketNightMemberType" value="Non-Member"> Non EAC/ACB Member ($70)
+                    <br>
+                    <label>Business Name:</label>
+                    <input type="text" name="marketNightBusinessName">
+                    <label>Description of Merchandise:</label>
+                    <textarea name="marketNightMerchDesc" rows="3"></textarea>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+
+        <div id="page-estimated-invoice" class="page-container">
+            <h2>Estimated Invoice</h2>
+            <p class="instructions">This is an estimated invoice based on your selections. Kit fees are not included. The final invoice will be sent by February 10, 2026.</p>
+            
+            <div id="invoice-details">
+                </div>
+            
+             <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+        
+        <div id="page-payment-schedule" class="page-container">
+            <h2>Payment Schedule</h2>
+            <ul>
+                <li>A non-refundable deposit of $100 is required with the registration form.</li>
+                <li>By February 10, 2026, class assignments will be sent electronically.</li>
+                <li>Full payment, including kit fees, are due no later than March 1, 2026 to confirm your registration.</li>
+            </ul>
+            
+            <h3>Payment Methods</h3>
+            <p><strong>e-Transfers:</strong> Canadian residents can make an e-transfer payment to 2026Treasurer@eac-acb.ca</p>
+            <p><strong>Cheque/Money Order:</strong> All cheques or money orders must be in Canadian funds and payable to “Seminar 2026 – Pacific Dreams,” and can be mailed c/o Linda Brenner, Unit 3, 7600 Gilbert Road, Richmond, BC V7C 3W2</p>
+            <p><strong>Online Payment:</strong> For those who wish to pay by credit card, instructions will be provided to you in the confirmation message once you click "submit".</p>
+            
+            <label>I am paying my deposit by: <span class="mandatory">*</span></label>
+            <div>
+                 <input type="radio" id="pay-etransfer" name="depositPaymentMethod" value="e-Transfer" checked>
+                 <label for="pay-etransfer" style="display: inline-block; font-weight: normal;">e-Transfer (preferred)</label>
+            </div>
+             <div>
+                 <input type="radio" id="pay-cheque" name="depositPaymentMethod" value="Cheque/Money Order">
+                 <label for="pay-cheque" style="display: inline-block; font-weight: normal;">Cheque/Money Order</label>
+            </div>
+             <div>
+                 <input type="radio" id="pay-online" name="depositPaymentMethod" value="Online Payment">
+                 <label for="pay-online" style="display: inline-block; font-weight: normal;">Online Payment (Visa or Mastercard)</label>
+            </div>
+
+            <label>Would you like to make installment payments for Seminar 2026? <span class="mandatory">*</span></label>
+            <div class="toggle-buttons" data-field-name="installmentPayments">
+                <button type="button" class="toggle-btn" data-value="Yes">Yes</button>
+                <button type="button" class="toggle-btn selected" data-value="No">No</button>
+            </div>
+            <div id="installment-details" class="instructions" style="display:none; margin-top:15px;">
+                </div>
+            
+             <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" class="btn-primary nav-btn" data-direction="1">Next</button>
+            </div>
+        </div>
+        
+        <div id="page-submit-registration" class="page-container">
+            <h2>Submit Registration</h2>
+            <p>You will receive an email that will contain a copy of this form detailing the selections you made to keep for your records.</p>
+            <p>If you do not receive this email after a few hours, you have either:</p>
+            <ul>
+                <li>Not successfully submitted the form by clicking the "submit" button below (in which case, try again).</li>
+                <li>A typo in your email or have used a different email when filling out the form (please email 2026Registration@eac-acb.ca to confirm if your registration was received successfully).</li>
+            </ul>
+             <div class="navigation-buttons">
+                <button type="button" class="btn-secondary nav-btn" data-direction="-1">Previous</button>
+                <button type="button" id="submit-button" class="btn-primary">Submit Registration</button>
+            </div>
+        </div>
+
+        <div id="page-thank-you" class="page-container">
+            <div id="thank-you-content">
+                <h2>Thank you for your registration for Seminar 2026 Pacific Dreams - Rêves du Pacifique</h2>
+                <p>Your registration summary has been downloaded.</p>
+            </div>
+        </div>
+
+    </div> 
+    
+    <div id="skill-level-modal" class="modal">
+        <div class="modal-content">
+            <h3>Skill Level Confirmation</h3>
+            <p id="skill-level-warning-text"></p>
+            <div id="skill-level-definition"></div>
+            <button id="skill-level-confirm-btn" class="btn-primary" style="margin-top: 20px;">I Understand and Confirm</button>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/html-docx-js/dist/html-docx.js"></script>
+    
+    <script>
+        // This is an "Immediately Invoked Function Expression" (IIFE).
+        // It's a common pattern to keep our variables private and avoid conflicts with other scripts.
+        (function() {
+            // ===================================================================================
+            // A. DATA AND CONFIGURATION
+            // ===================================================================================
+
+            const registrationData = {};
+            const fullPath = [
+                'page-registration', 'page-registrant-details', 'page-additional-info', 
+                'page-activity-selection', 'page-skill-levels', 'page-session-a', 
+                'page-session-b', 'page-options-day', 'page-additional-options',
+                'page-estimated-invoice', 'page-payment-schedule', 'page-submit-registration', 'page-thank-you'
+            ];
+            const shortPath = [
+                'page-registration', 'page-registrant-details', 'page-additional-options',
+                'page-estimated-invoice', 'page-payment-schedule', 'page-submit-registration', 'page-thank-you'
+            ];
+            let pageFlow = [];
+            let currentPageIndex = 0;
+
+            const skillLevels = {
+                'Basic': 'For anyone new to embroidery or the technique or requiring guidance in reading/understanding stitch diagrams and patterns. Assistance and repeated directions will be provided. Basic level classes can also be enjoyed by the intermediate and advanced stitcher.',
+                'Basic/Intermediate': 'For those with stitching experience who are new to the technique. Assistance and detailed directions will be provided. Basic/Intermediate level classes can also be enjoyed by the intermediate and advanced stitcher.',
+                'Intermediate': 'For those familiar with the technique or similar techniques at the basic level who want to advance their understanding of the technique, who understand stitch diagrams and patterns but may need guidance, and who can work somewhat independently.',
+                'Intermediate/Advanced': 'For those familiar with and who have some experience with the technique at the intermediate level, who may not be fully proficient with the more complex stitches, who can work independently with guidance from the instructor and move quickly from one element to the next. There may not be much class time available to repeat instructions/demonstrations, and stitchers unfamiliar with the technique may be unable to keep up.',
+                'Advanced': 'For those who want to expand and challenge their skills in a technique in which they have foundational experience, can read charts and stitch diagrams easily, are familiar with the stitches used in the technique, have a proficient understanding of stitch techniques for the more complex stitches, and can work independently. The class will move quickly through the setup and basic elements of the project. There may not be much class time to repeat instructions/demonstrations, and stitchers unfamiliar with the technique may be unable to keep up.'
+            };
+            
+            const sessionAClasses = [
+                { value: '', text: 'Please select...' },
+                { value: 'AB4-01', text: 'AB4-01 ≈ Monograms & Beyond ≈ Kim Beamish (Advanced)', skill: 'Advanced', type: '4-day', cost: 1000 },
+                { value: 'AB4-02', text: 'AB4-02 ≈ Advanced Mushroom Box ≈ Emma Broughton (Advanced)', skill: 'Advanced', type: '4-day', cost: 1000 },
+                { value: 'AB4-03', text: 'AB4-03 ≈ Stitch Sketchbook ≈ Gail Harker (Basic/Intermediate)', skill: 'Basic/Intermediate', type: '4-day', cost: 1000 },
+                { value: 'AB4-04', text: 'AB4-04 ≈ Gingerbread Tree ≈ Diane Scott (Intermediate)', skill: 'Intermediate', type: '4-day', cost: 1000 },
+                { value: 'AB4-05', text: 'AB4-05 ≈ Simply Stitching', skill: 'N/A', type: '4-day', cost: 830 },
+                { value: 'A2-01', text: 'A2-01 ≈ Harlequin ≈ Terri Bay (Intermediate)', skill: 'Intermediate', type: '2-day', cost: 515 },
+                { value: 'A2-02', text: 'A2-02 ≈ Fleur d’été ≈ Stephanie Bonneau (Intermediate/Advanced)', skill: 'Intermediate/Advanced', type: '2-day', cost: 515 },
+                { value: 'A2-03', text: 'A2-03 ≈ Ode to the Palette ≈ Natalie Dupuis (Basic/Intermediate)', skill: 'Basic/Intermediate', type: '2-day', cost: 515 },
+                { value: 'A2-04', text: 'A2-04 ≈ Pacific Reflections ≈ Wendy Innes (Intermediate)', skill: 'Intermediate', type: '2-day', cost: 515 },
+                { value: 'A2-05', text: 'A2-05 ≈ Boutis by the Seashore – Scallop Shell ≈ Elizabeth Janzen (Basic/Intermediate)', skill: 'Basic/Intermediate', type: '2-day', cost: 515 },
+                { value: 'A2-06', text: 'A2-06 ≈ Ribbon Monogram Wreath ≈ Heather Lewis (Basic/Intermediate)', skill: 'Basic/Intermediate', type: '2-day', cost: 515 },
+                { value: 'A2-07', text: 'A2-07 ≈ Seahorse Sam ≈ Diane Mugford (Basic/Intermediate)', skill: 'Basic/Intermediate', type: '2-day', cost: 515 },
+                { value: 'A2-08', text: 'A2-08 ≈ Solar Flair ≈ Mike Parr (Basic/Intermediate)', skill: 'Basic/Intermediate', type: '2-day', cost: 515 },
+                { value: 'A2-09', text: 'A2-09 ≈ Byzantium ≈ Lorene Salt (Advanced)', skill: 'Advanced', type: '2-day', cost: 515 },
+                { value: 'A2-10', text: 'A2-10 ≈ Simply Stitching', skill: 'N/A', type: '2-day', cost: 425 }
+            ];
+
+            const sessionBClasses = [
+                { value: '', text: 'Please select...' },
+                { value: 'B2-02', text: 'B2-02 ≈ Louis XVI ≈ Stephanie Bonneau (Intermediate)', skill: 'Intermediate', type: '2-day', cost: 495 },
+                { value: 'B2-03', text: 'B2-03 ≈ Under the Ocean ≈ Betty Caskey (Basic)', skill: 'Basic', type: '2-day', cost: 495 },
+                { value: 'B2-04', text: 'B2-04 ≈ Solar Eclipse ≈ Natalie Dupuis (Basic/Intermediate)', skill: 'Basic/Intermediate', type: '2-day', cost: 495 },
+                { value: 'B2-05', text: 'B2-05 ≈ Bee and Blossoms ≈ Wendy Innes (Intermediate)', skill: 'Intermediate', type: '2-day', cost: 495 },
+                { value: 'B2-06', text: 'B2-06 ≈ Partridge in a Pear Tree ≈ Heather Lewis (Intermediate)', skill: 'Intermediate', type: '2-day', cost: 495 },
+                { value: 'B2-07', text: 'B2-07 ≈ Seaside Cuff ≈ Diane Mugford (Basic/Intermediate)', skill: 'Basic/Intermediate', type: '2-day', cost: 495 },
+                { value: 'B2-08', text: 'B2-08 ≈ Regalia ≈ Mike Parr (Intermediate/Advanced)', skill: 'Intermediate/Advanced', type: '2-day', cost: 495 },
+                { value: 'B2-09', text: 'B2-09 ≈ Bargello Mellow ≈ Lorene Salt (Intermediate)', skill: 'Intermediate', type: '2-day', cost: 495 },
+                { value: 'B2-10', text: 'B2-10 ≈ Simply Stitching', skill: 'N/A', type: '2-day', cost: 405 }
+            ];
+
+            const optionsDayClasses = [
+                { value: '', text: 'Please select...' },
+                { value: 'C1-01', text: 'C1-01 ≈ Lotus Drop $250 ≈ Terri Bay (Basic/Intermediate)', skill: 'Basic/Intermediate', cost: 250 },
+                { value: 'C1-02', text: 'C1-02 ≈ Spring Pin Cushion $250 ≈ Kim Beamish (Basic)', skill: 'Basic', cost: 250 },
+                { value: 'C1-03', text: 'C1-03 ≈ Fleur de Lys $250 ≈ Stephanie Bonneau (Intermediate)', skill: 'Intermediate', cost: 250 },
+                { value: 'C1-04', text: 'C1-04 ≈ Experimental Appliqué Collage $250 ≈ Emma Broughton (Basic)', skill: 'Basic', cost: 250 },
+                { value: 'C1-05', text: 'C1-05 ≈ Knotty Hollyhocks & Buttons $250 ≈ Betty Caskey (Basic/Intermediate)', skill: 'Basic/Intermediate', cost: 250 },
+                { value: 'C1-06', text: 'C1-06 ≈ Grape Cluster $250 ≈ Wendy Innes (Basic/Intermediate)', skill: 'Basic/Intermediate', cost: 250 },
+                { value: 'C1-07', text: 'C1-07 ≈ Mounting Your Finished Embroidery $250 ≈ Heather Lewis (Basic/Intermediate)', skill: 'Basic/Intermediate', cost: 250 },
+                { value: 'C1-08', text: 'C1-08 ≈ Dorset Buttons $250 ≈ Diane Mugford (Basic/Intermediate)', skill: 'Basic/Intermediate', cost: 250 },
+                { value: 'T1-01', text: 'T1-01 ≈ Granville Island and False Creek $80', skill: 'N/A', cost: 80 },
+                { value: 'T1-02', text: 'T1-02 ≈ Museum of Anthropology at the University of British Columbia $100', skill: 'N/A', cost: 100 }
+            ];
+
+            const virtualClasses = [
+                { id: 'V2-01', name: 'Grace’s Garden', cost: 250, skill: 'Intermediate', desc: 'Access to Ann-Marie’s Thinkific platform so that you can watch the lessons at your own convenience and review them as needed. Plus four 2-hour Zoom Q&A sessions on Saturdays: May 23, 30, June 6 and 13 at 4 p.m. Pacific, 5 p.m. Mountain, 6 p.m. Central, 7 p.m. Eastern, 8 p.m. Atlantic, 8:30 p.m. Newfoundland. Online Zoom hours are shorter, as the sessions are designed to answer questions and provide a check-in.' },
+                { id: 'V4-02', name: 'Blue Bird', cost: 500, skill: 'Intermediate/Advanced', desc: 'six 4-hour sessions, Saturdays: May 23, 30, June 6, 13, 20 and 27. The Zoom sessions will start at 8 a.m. Pacific, 9 a.m. Mountain, 10 a.m. Central, 11 a.m. Eastern, noon Atlantic, 12:30 p.m. Newfoundland' },
+                { id: 'V4-03', name: 'Incognito', cost: 500, skill: 'Intermediate/Advanced', desc: 'six 4-hour sessions, Sundays: May 24, 31, June 7, 14, 21 and 28. The Zoom sessions will start at 8 a.m. Pacific, 9 a.m. Mountain, 10 a.m. Central, 11 a.m. Eastern, noon Atlantic, 12:30 p.m. Newfoundland' },
+                { id: 'V2-04', name: 'Boutis by the Seashore – Sea Star', cost: 250, skill: 'Basic/Intermediate', desc: 'four 3-hour sessions, Saturdays: July 4, 11 and 18. The Zoom sessions will start at 8 a.m. Pacific, 9 a.m. Mountain, 10 a.m. Central, 11 a.m. Eastern, noon Atlantic, 12:30 p.m. Newfoundland. Plus, you’ll have access to some recorded instructions.' },
+                { id: 'V1-05', name: 'Beading – Peyote Stitch', cost: 125, skill: 'Basic/Intermediate', desc: 'two 3-hour sessions, Sundays: May 24 and 30. The Zoom sessions will start at noon Pacific, 1 p.m. Mountain, 2 p.m. Central, 3 p.m. Eastern, 4 p.m. Atlantic, 4:30 p.m. Newfoundland' },
+                { id: 'V2-06', name: 'Grace, Hope and Cheer', cost: 250, skill: 'Intermediate', desc: 'four 3-hour sessions, Sundays: June 7, 14, 21 and 28. The Zoom sessions will start at noon Pacific, 1 p.m. Mountain, 2 p.m. Central, 3 p.m. Eastern, 4 p.m. Atlantic, 4:30 p.m. Newfoundland.' }
+            ];
+
+            // ===================================================================================
+            // B. CORE APPLICATION LOGIC
+            // ===================================================================================
+
+            function showPage(index) {
+                document.querySelectorAll('.page-container').forEach(page => {
+                    page.classList.remove('active');
+                });
+                const pageId = pageFlow[index];
+                const newPage = document.getElementById(pageId);
+                if (newPage) {
+                    runPageSpecificSetup(pageId);
+                    newPage.classList.add('active');
+                    document.getElementById('registration-app').scrollIntoView();
+                }
+            }
+
+            function navigate(direction) {
+                const currentPageId = pageFlow[currentPageIndex];
+                if (direction > 0) {
+                    if (!validatePage(currentPageId)) {
+                        return;
+                    }
+                }
+                savePageData(currentPageId);
+                currentPageIndex += direction;
+                showPage(currentPageIndex);
+            }
+            
+            // ===================================================================================
+            // C. EVENT LISTENERS
+            // ===================================================================================
+
+            function initializeEventListeners() {
+                const understandCheckbox = document.getElementById('accept-conditions-checkbox');
+                const understandButton = document.getElementById('understand-button');
+                understandCheckbox.addEventListener('change', () => {
+                    if (understandCheckbox.checked) {
+                        understandButton.disabled = false;
+                        understandButton.classList.add('btn-understand-ready');
+                    } else {
+                        understandButton.disabled = true;
+                        understandButton.classList.remove('btn-understand-ready');
+                    }
+                });
+                understandButton.addEventListener('click', () => {
+                    pageFlow = fullPath;
+                    navigate(1);
+                });
+                document.getElementById('goto-additional-info-btn').addEventListener('click', () => {
+                    pageFlow = fullPath;
+                    navigate(1);
+                });
+                document.getElementById('goto-additional-options-btn').addEventListener('click', () => {
+                    pageFlow = shortPath;
+                    navigate(1);
+                });
+                document.querySelectorAll('.nav-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const direction = parseInt(event.target.getAttribute('data-direction'));
+                        navigate(direction);
+                    });
+                });
+                document.querySelectorAll('.toggle-buttons').forEach(container => {
+                    container.addEventListener('click', (event) => {
+                        if (event.target.classList.contains('toggle-btn')) {
+                            const button = event.target;
+                            const siblings = container.querySelectorAll('.toggle-btn');
+                            siblings.forEach(btn => btn.classList.remove('selected'));
+                            button.classList.add('selected');
+                            const fieldName = container.dataset.fieldName;
+                            let ticketType = null;
+                            if (fieldName && fieldName.startsWith('buy')) {
+                                const ticketTypeRaw = fieldName.replace('buy', '').replace('Tickets', '');
+                                ticketType = ticketTypeRaw.charAt(0).toLowerCase() + ticketTypeRaw.slice(1);
+                            } else if (fieldName === 'eveningLecture') {
+                                ticketType = 'eveningLecture';
+                            }
+                            if (ticketType) {
+                                const detailsDiv = document.querySelector(`.additional-ticket-details[data-ticket-type="${ticketType}"]`);
+                                if (detailsDiv) {
+                                    detailsDiv.style.display = button.dataset.value === 'Yes' ? 'block' : 'none';
+                                }
+                            }
+                        }
+                    });
+                });
+                document.getElementById('toggle-virtual-classes').addEventListener('click', (event) => {
+                    if (event.target.dataset.value === 'Yes') {
+                        document.getElementById('virtual-classes-content').style.display = 'block';
+                    } else {
+                        document.getElementById('virtual-classes-content').style.display = 'none';
+                    }
+                });
+                document.getElementById('toggle-market-night').addEventListener('click', (event) => {
+                    if (event.target.dataset.value === 'Yes') {
+                        document.getElementById('market-night-details').style.display = 'block';
+                    } else {
+                        document.getElementById('market-night-details').style.display = 'none';
+                    }
+                });
+                
+                setupClassDropdowns();
+
+                // MODIFIED: Submit button now calls the server
+                document.getElementById('submit-button').addEventListener('click', async (event) => {
+                    const submitButton = event.target;
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Submitting...';
+
+                    savePageData(pageFlow[currentPageIndex]);
+                    
+                    // Always generate the Word doc as a local backup for the user.
+                    generateWordDoc();
+                    
+                    // Generate the JSON file as a local backup for the user.
+                    generateJsonFile();
+
+                    try {
+                        // =========================================================================
+                        // HIGHLIGHT: LIVE SERVER CALL
+                        // This now makes a real network request to the Node.js server.
+                        // For Render, we use a relative path, not a hardcoded IP address.
+                        // =========================================================================
+                        const response = await fetch('/api/submit-to-notion', { // <<< REQUIRED CHANGE FOR RENDER
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(registrationData),
+                        });
+
+                        const result = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(result.message || 'An unknown error occurred.');
+                        }
+                        
+                        // Update thank you page with success message
+                        document.getElementById('thank-you-content').innerHTML = `
+                            <h2>Thank You!</h2>
+                            <p>Your registration has been successfully submitted to our system.</p>
+                            <p>A summary Word document has also been downloaded for your records.</p>
+                        `;
+
+                    } catch (error) {
+                        // Update thank you page with an error message
+                        console.error('Submission failed:', error);
+                        document.getElementById('thank-you-content').innerHTML = `
+                            <h2>Submission Failed</h2>
+                            <p style="color: red;">We're sorry, but there was an error submitting your registration. Please try again later or contact support.</p>
+                            <p><strong>Error:</strong> ${error.message}</p>
+                            <p>A Word document backup of your registration has been downloaded for your records. Please keep it safe.</p>
+                        `;
+                    } finally {
+                        // Move to the final "Thank You" page regardless of outcome
+                        currentPageIndex++;
+                        showPage(currentPageIndex);
+                        const thankYouPage = document.getElementById('page-thank-you');
+                        const navButtons = thankYouPage.querySelector('.navigation-buttons');
+                        if(navButtons) navButtons.style.display = 'none';
+                    }
+                });
+            }
+            
+            // ===================================================================================
+            // D. PAGE-SPECIFIC LOGIC
+            // ===================================================================================
+
+            function runPageSpecificSetup(pageId) {
+                if (pageId === 'page-estimated-invoice') {
+                    generateInvoice();
+                }
+                if (pageId === 'page-payment-schedule') {
+                    setupInstallmentPlan();
+                }
+                 if (pageId === 'page-session-b') {
+                    const choice1A = sessionAClasses.find(c => c.value === registrationData.sessionAChoice1);
+                    if (choice1A && choice1A.type === '4-day') {
+                        const selectB1 = document.getElementById('session-b-choice-1');
+                        populateDropdown(selectB1, [choice1A]);
+                        selectB1.value = choice1A.value;
+                        selectB1.disabled = true;
+                    }
+                    const choice2A = sessionAClasses.find(c => c.value === registrationData.sessionAChoice2);
+                    if (choice2A && choice2A.type === '4-day') {
+                        const selectB2 = document.getElementById('session-b-choice-2');
+                        populateDropdown(selectB2, [choice2A]);
+                        selectB2.value = choice2A.value;
+                        selectB2.disabled = true;
+                    }
+                }
+            }
+
+            function validatePage(pageId) {
+                document.querySelectorAll('.error-message').forEach(el => el.remove());
+                let isValid = true;
+                const showError = (element, message) => {
+                    isValid = false;
+                    const error = document.createElement('div');
+                    error.className = 'error-message';
+                    error.textContent = message;
+                    element.parentNode.insertBefore(error, element.nextSibling);
+                };
+
+                switch (pageId) {
+                    case 'page-registrant-details':
+                        const email = document.getElementById('email');
+                        if (!/^\S+@\S+\.\S+$/.test(email.value)) {
+                            showError(email, 'Please enter a valid email address.');
+                        }
+                        const memNum = document.getElementById('membership-number');
+                        if (!/^[A-Z]{2}\s\d{6}$/.test(memNum.value)) {
+                            showError(memNum, 'Membership number must be in the format: XX 123456');
+                        }
+                        const phone = document.getElementById('phone-number');
+                        if (!/^\d{3}-\d{3}-\d{4}$/.test(phone.value)) {
+                            showError(phone, 'Phone number must be in the format: 999-999-9999');
+                        }
+                        ['first-name', 'last-name', 'membership-expiry', 'mailing-address'].forEach(id => {
+                            const el = document.getElementById(id);
+                            if (!el.value) showError(el, 'This field is required.');
+                        });
+                        break;
+                    
+                    case 'page-additional-info':
+                        ['emergency-contact-name', 'emergency-contact-relationship', 'accommodations'].forEach(id => {
+                            const el = document.getElementById(id);
+                            if (!el.value) showError(el, 'This field is required.');
+                        });
+                        const emergencyPhone = document.getElementById('emergency-contact-number');
+                        if (!/^\d{3}-\d{3}-\d{4}$/.test(emergencyPhone.value)) {
+                            showError(emergencyPhone, 'Phone number must be in the format: 999-999-9999');
+                        }
+                        document.querySelectorAll(`#${pageId} .toggle-buttons`).forEach(container => {
+                           if (!container.querySelector('.selected')) {
+                               isValid = false;
+                               alert('Please answer all Yes/No questions.'); 
+                           }
+                        });
+                        break;
+
+                    case 'page-session-a':
+                        const choice1A = document.getElementById('session-a-choice-1').value;
+                        const choice2A = document.getElementById('session-a-choice-2').value;
+                        if (choice1A && !choice2A) {
+                             showError(document.getElementById('session-a-choice-2'), 'A second choice is mandatory if a first choice is selected.');
+                        }
+                        break;
+                    
+                    case 'page-session-b':
+                        const choice1B = document.getElementById('session-b-choice-1').value;
+                        const choice2B = document.getElementById('session-b-choice-2').value;
+                        if (choice1B && !choice2B) {
+                            showError(document.getElementById('session-b-choice-2'), 'A second choice is mandatory if a first choice is selected.');
+                        }
+                        break;
+                    
+                    case 'page-options-day':
+                        // This page is now fully optional, so we remove the validation.
+                        // No validation needed for this page.
+                        break;
+                    
+                    case 'page-additional-options':
+                         if (document.querySelector('#toggle-virtual-classes .selected').dataset.value === 'Yes') {
+                             const checkedVirtual = document.querySelectorAll('#virtual-classes-list input:checked').length;
+                             if (checkedVirtual === 0) {
+                                 if (!confirm("You have chosen to see virtual classes but haven't selected any. Do you want to continue without selecting a class?")) {
+                                     isValid = false;
+                                 }
+                             }
+                         }
+                        break;
+                }
+                
+                return isValid;
+            }
+
+            function savePageData(pageId) {
+                const pageElement = document.getElementById(pageId);
+                if (!pageElement) return;
+
+                pageElement.querySelectorAll('input[name], select[name], textarea[name]').forEach(el => {
+                    if (el.type === 'radio') {
+                        if (el.checked) registrationData[el.name] = el.value;
+                    } else if (el.type === 'checkbox') {
+                        registrationData[el.name] = el.checked;
+                    } else {
+                        registrationData[el.name] = el.value;
+                    }
+                });
+
+                pageElement.querySelectorAll('.toggle-buttons').forEach(container => {
+                    const fieldName = container.dataset.fieldName;
+                    const selectedButton = container.querySelector('.selected');
+                    if (fieldName && selectedButton) {
+                        registrationData[fieldName] = selectedButton.dataset.value;
+                    }
+                });
+                
+                if (pageId === 'page-registrant-details' && !registrationData.chapterName) {
+                    registrationData.chapterName = 'Individual Member';
+                }
+                
+                if (pageId === 'page-additional-options') {
+                    registrationData.virtualClasses = [];
+                    document.querySelectorAll('#virtual-classes-list input:checked').forEach(checkbox => {
+                        registrationData.virtualClasses.push(checkbox.value);
+                    });
+                }
+            }
+
+            // ===================================================================================
+            // E. HELPER & UTILITY FUNCTIONS
+            // ===================================================================================
+
+            function populateDropdown(selectElement, optionsArray) {
+                selectElement.innerHTML = '';
+                optionsArray.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.text;
+                    if (opt.skill) option.dataset.skill = opt.skill;
+                    if (opt.type) option.dataset.type = opt.type;
+                    selectElement.appendChild(option);
+                });
+            }
+            
+            function setupClassDropdowns() {
+                const sA1 = document.getElementById('session-a-choice-1');
+                const sA2 = document.getElementById('session-a-choice-2');
+                const sA3 = document.getElementById('session-a-choice-3');
+                const sB1 = document.getElementById('session-b-choice-1');
+                const sB2 = document.getElementById('session-b-choice-2');
+                const sB3 = document.getElementById('session-b-choice-3');
+                const oD1 = document.getElementById('options-day-choice-1');
+                const oD2 = document.getElementById('options-day-choice-2');
+                const oD3 = document.getElementById('options-day-choice-3');
+                
+                populateDropdown(sA1, sessionAClasses);
+                populateDropdown(sA2, sessionAClasses);
+                populateDropdown(sA3, sessionAClasses);
+                populateDropdown(sB1, sessionBClasses);
+                populateDropdown(sB2, sessionBClasses);
+                populateDropdown(sB3, sessionBClasses);
+                populateDropdown(oD1, optionsDayClasses);
+                populateDropdown(oD2, optionsDayClasses);
+                populateDropdown(oD3, optionsDayClasses);
+
+                const updateDependentDropdowns = (source, targets, options) => {
+                    const selectedValues = Array.from(source.querySelectorAll('select')).map(s => s.value).filter(Boolean);
+                    targets.forEach(targetSelect => {
+                        const currentVal = targetSelect.value;
+                        const filteredOptions = options.filter(opt => !selectedValues.includes(opt.value) || opt.value === currentVal || opt.value === '');
+                        populateDropdown(targetSelect, filteredOptions);
+                        targetSelect.value = currentVal;
+                    });
+                };
+
+                sA1.addEventListener('change', () => {
+                    handleSkillCheck(sA1);
+                    updateDependentDropdowns(document.getElementById('page-session-a'), [sA2, sA3], sessionAClasses);
+                });
+                sA2.addEventListener('change', () => {
+                    handleSkillCheck(sA2);
+                    updateDependentDropdowns(document.getElementById('page-session-a'), [sA1, sA3], sessionAClasses);
+                });
+                 sA3.addEventListener('change', () => handleSkillCheck(sA3));
+                
+                sB1.addEventListener('change', () => {
+                    handleSkillCheck(sB1);
+                    updateDependentDropdowns(document.getElementById('page-session-b'), [sB2, sB3], sessionBClasses);
+                });
+                sB2.addEventListener('change', () => {
+                     handleSkillCheck(sB2);
+                    updateDependentDropdowns(document.getElementById('page-session-b'), [sB1, sB3], sessionBClasses);
+                });
+                sB3.addEventListener('change', () => handleSkillCheck(sB3));
+                
+                oD1.addEventListener('change', () => {
+                    handleSkillCheck(oD1);
+                    updateDependentDropdowns(document.getElementById('page-options-day'), [oD2, oD3], optionsDayClasses);
+                });
+                oD2.addEventListener('change', () => {
+                    handleSkillCheck(oD2);
+                    updateDependentDropdowns(document.getElementById('page-options-day'), [oD1, oD3], optionsDayClasses);
+                });
+                oD3.addEventListener('change', () => handleSkillCheck(oD3));
+            }
+            
+            function handleSkillCheck(element) {
+                let skill;
+                if (element.tagName === 'SELECT') {
+                    const selectedOption = element.options[element.selectedIndex];
+                    skill = selectedOption.dataset.skill;
+                } else if (element.type === 'checkbox') {
+                    skill = element.dataset.skill;
+                }
+
+                const highSkills = ['Intermediate', 'Intermediate/Advanced', 'Advanced'];
+                
+                if (skill && highSkills.includes(skill)) {
+                    showSkillModal(skill, () => {
+                        console.log(`User confirmed skill level: ${skill}`);
+                    });
+                }
+            }
+
+            function showSkillModal(skill, onConfirm) {
+                const modal = document.getElementById('skill-level-modal');
+                document.getElementById('skill-level-warning-text').textContent = `Your selection is for a class with a skill level of ${skill}. Please confirm that you have read and understand the skill required for students participating in this class.`;
+                document.getElementById('skill-level-definition').innerHTML = `<p><strong>${skill}:</strong> ${skillLevels[skill]}</p>`;
+                modal.style.display = 'flex';
+                
+                const confirmBtn = document.getElementById('skill-level-confirm-btn');
+                const newConfirmBtn = confirmBtn.cloneNode(true);
+                confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+                newConfirmBtn.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                    if (onConfirm) onConfirm();
+                }, { once: true });
+            }
+
+            function populateVirtualClasses() {
+                const container = document.getElementById('virtual-classes-list');
+                let html = '';
+                virtualClasses.forEach(vc => {
+                    html += `
+                        <div style="border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+                            <label for="vc-${vc.id}" style="display: flex; align-items: flex-start; font-weight: normal;">
+                                <input type="checkbox" id="vc-${vc.id}" value="${vc.id}" data-cost="${vc.cost}" data-skill="${vc.skill}" style="margin-top: 5px; margin-right: 10px; flex-shrink: 0;">
+                                <div>
+                                    <strong>${vc.id} ≈ ${vc.name} ($${vc.cost}) ≈ (${vc.skill})</strong>
+                                    <p class="instructions" style="margin: 5px 0 0 0;">${vc.desc}</p>
+                                </div>
+                            </label>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+                
+                container.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
+                        updateVirtualClassTotal();
+                        if (checkbox.checked) {
+                            handleSkillCheck(checkbox);
+                        }
+                    });
+                });
+            }
+
+            function updateVirtualClassTotal() {
+                let total = 0;
+                document.querySelectorAll('#virtual-classes-list input:checked').forEach(checkbox => {
+                    total += parseFloat(checkbox.dataset.cost);
+                });
+                document.getElementById('virtual-class-total').textContent = total.toFixed(2);
+            }
+
+            function generateInvoice() {
+                const container = document.getElementById('invoice-details');
+                let total = 0;
+                let html = '<table style="width:100%; border-collapse: collapse;">';
+                
+                const addRow = (desc, cost) => {
+                    html += `<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">${desc}</td><td style="padding: 8px; border-bottom: 1px solid #ddd; text-align:right;">$${cost.toFixed(2)}</td></tr>`;
+                    total += cost;
+                };
+
+                let isFourDayCourseSelected = false;
+                const choice1AValue = registrationData.sessionAChoice1;
+                const choice1A = sessionAClasses.find(c => c.value === choice1AValue);
+
+                if (choice1A) {
+                    addRow(`Session A Choice 1: ${choice1A.text}`, choice1A.cost);
+                    if (choice1A.type === '4-day') {
+                        isFourDayCourseSelected = true;
+                    }
+                }
+
+                if (!isFourDayCourseSelected) {
+                    const choice1BValue = registrationData.sessionBChoice1;
+                    const choice1B = sessionBClasses.find(c => c.value === choice1BValue);
+                    if (choice1B) {
+                        addRow(`Session B Choice 1: ${choice1B.text}`, choice1B.cost);
+                    }
+                }
+                
+                const optionsDayValue = registrationData.optionsDayChoice1;
+                const optionsDayChoice = optionsDayClasses.find(c => c.value === optionsDayValue);
+                if (optionsDayChoice && optionsDayChoice.value) { // Check that a real choice was made
+                     addRow(`Options Day Choice 1: ${optionsDayChoice.text}`, optionsDayChoice.cost);
+                }
+                
+                (registrationData.virtualClasses || []).forEach(vcId => {
+                    const vc = virtualClasses.find(c => c.id === vcId);
+                    if(vc) addRow(`Virtual: ${vc.name}`, vc.cost);
+                });
+                
+                if (registrationData.eveningLecture === 'Yes') addRow('Evening Lecture Tickets', 5.00 * (registrationData.eveningLectureTicketCount || 1));
+                if (registrationData.buyOpeningReceptionTickets === 'Yes') addRow('Additional Opening Reception Tickets', 60.00 * (registrationData.openingReceptionTicketCount || 1));
+                if (registrationData.buyLuncheonTickets === 'Yes') addRow('Additional Luncheon Tickets', 55.00 * (registrationData.luncheonTicketCount || 1));
+                if (registrationData.buyBanquetTickets === 'Yes') addRow('Additional Banquet Tickets', 95.00 * (registrationData.banquetTicketCount || 1));
+                if (registrationData.marketNightMemberType === 'Member') addRow('Market Night Table (Member)', 50.00);
+                if (registrationData.marketNightMemberType === 'Non-Member') addRow('Market Night Table (Non-Member)', 70.00);
+
+                html += `<tr style="font-weight:bold;"><td style="padding: 8px;">ESTIMATED TOTAL</td><td style="padding: 8px; text-align:right;">$${total.toFixed(2)}</td></tr>`;
+                
+                const deposit = Math.min(100, total);
+                html += `<tr><td style="padding: 8px;">Deposit Due Upon Registration</td><td style="padding: 8px; text-align:right;">$${deposit.toFixed(2)}</td></tr>`;
+                html += `</table>`;
+                
+                container.innerHTML = html;
+                registrationData.estimatedTotal = total;
+            }
+            
+             function setupInstallmentPlan() {
+                const container = document.getElementById('installment-details');
+                const toggle = document.querySelector('[data-field-name="installmentPayments"]');
+                
+                toggle.addEventListener('click', (event) => {
+                    if (event.target.dataset.value === 'Yes') {
+                         const total = registrationData.estimatedTotal || 0;
+                         const deposit = 100;
+                         const balance = total - deposit;
+                         if (balance > 0) {
+                            const payment1 = (balance / 2).toFixed(2);
+                            const payment2 = (balance - payment1).toFixed(2);
+                            container.innerHTML = `
+                                <p>Your estimated remaining balance after the $100 deposit is $${balance.toFixed(2)}. You can make two installment payments:</p>
+                                <ul>
+                                    <li><strong>$${payment1}</strong> due by December 15, 2025</li>
+                                    <li><strong>$${payment2}</strong> due by January 20, 2026</li>
+                                </ul>
+                                <p>You will not receive reminder notifications. Submission of these payments is your responsibility. Any payments received will be reflected in your final invoice.</p>
+                            `;
+                         } else {
+                            container.innerHTML = `<p>Your total is less than the deposit. No installment payments are necessary.</p>`;
+                         }
+                         container.style.display = 'block';
+                    } else {
+                        container.style.display = 'none';
+                    }
+                });
+             }
+             
+            // ===================================================================================
+            // F. FINAL SUBMISSION AND FILE GENERATION
+            // ===================================================================================
+            
+            function generateWordDoc() {
+                let contentHtml = `<h1>Seminar 2026 Registration Summary</h1>`;
+                for (const key in registrationData) {
+                    let value = registrationData[key];
+                    if (Array.isArray(value)) {
+                        value = value.join(', ');
+                    }
+                    if (value) {
+                        const formattedKey = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                        contentHtml += `<p><strong>${formattedKey}:</strong> ${value}</p>`;
+                    }
+                }
+                
+                const fileBuffer = htmlDocx.asBlob(contentHtml);
+                const url = URL.createObjectURL(fileBuffer);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `seminar_registration_${registrationData.lastName || 'summary'}.docx`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+             /**
+             * @description Creates a JSON file from the registration data and triggers a download.
+             */
+            function generateJsonFile() {
+                const jsonData = JSON.stringify(registrationData, null, 2);
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                const lastName = registrationData.lastName || 'summary';
+                a.download = `registration_data_${lastName}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            // ===================================================================================
+            // G. INITIALIZATION
+            // ===================================================================================
+            
+            populateVirtualClasses();
+            initializeEventListeners();
+            
+        })();
+    </script>
+</body>
+</html>
